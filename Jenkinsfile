@@ -1,4 +1,4 @@
-node('win-slave-node') {
+node {
   def msbuild = tool name: 'MSBuild', type: 'hudson.plugins.msbuild.MsBuildInstallation'
 
   stage('Checkout') {
