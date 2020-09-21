@@ -1,12 +1,11 @@
-node {
-	stage 'Checkout'
-		checkout scm
+node('win-slave-node') {
+  def msbuild = tool name: 'MSBuild', type: 'hudson.plugins.msbuild.MsBuildInstallation'
 
-	stage 'Build'
-		
-		bat "\"${tool 'MSBuild'}\" SolutionName.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+  stage('Checkout') {
+    checkout scm
+  }
 
-	stage 'Archive'
-		archive 'ProjectName/bin/Release/**'
-
+  stage('Build') {
+    bat "${msbuild} WAPP15092020TA.sln"
+  }
 }
